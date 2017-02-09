@@ -1,5 +1,6 @@
-package com.cins.example;
+package com.cins.example.activity;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -21,17 +22,27 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.cins.example.AppConstants;
+import com.cins.example.fragment.CardContentFragment;
+import com.cins.example.fragment.ListContentFragment;
+import com.cins.example.R;
+import com.cins.example.fragment.TileContentFragment;
+import com.cins.example.utils.SharedPreferencesUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public Activity mActivity;
+    private int currentIndex;
     private int mDayNightMode = AppCompatDelegate.MODE_NIGHT_AUTO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mActivity = this;
 
         setContentView(R.layout.activity_main);
 
@@ -136,10 +147,12 @@ public class MainActivity extends AppCompatActivity
             SharedPreferences sp = getSharedPreferences("user_setting", MODE_PRIVATE);
             int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
             if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
-                sp.edit().putInt("theme", 0).apply();
+                //sp.edit().putInt("theme", 0).apply();
+                SharedPreferencesUtil.setBoolean(mActivity, AppConstants.ISNIGHT, false);
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             } else {
-                sp.edit().putInt("theme", 1).apply();
+                //sp.edit().putInt("theme", 1).apply();
+                SharedPreferencesUtil.setBoolean(mActivity, AppConstants.ISNIGHT, true);
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             }
             //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -215,4 +228,9 @@ public class MainActivity extends AppCompatActivity
         }*/
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(AppConstants.CURRENT_INDEX,currentIndex);
+        super.onSaveInstanceState(outState);
+    }
 }

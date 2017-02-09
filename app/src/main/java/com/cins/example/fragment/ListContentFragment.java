@@ -1,4 +1,4 @@
-package com.cins.example;
+package com.cins.example.fragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.cins.example.activity.DetailActivity;
+import com.cins.example.R;
 
 /**
  * Created by Eric on 2017/1/14.

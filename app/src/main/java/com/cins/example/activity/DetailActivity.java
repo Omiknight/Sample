@@ -1,4 +1,4 @@
-package com.cins.example;
+package com.cins.example.activity;
 
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -8,6 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.cins.example.DayNightHelper;
+import com.cins.example.R;
 
 /**
  * Created by Eric on 2017/1/14.
