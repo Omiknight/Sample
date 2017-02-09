@@ -18,4 +18,7 @@
         deserunt mollit anim id est laborum.
     </string>
     <string name="detail_location">"8 Rue Scribe, 75009 Paris, France"</string>
+
+    <string name="action_day_night_yes">Night Mode</string>
+    <string name="action_day_night_no">Day Mode</string>
 </resources>

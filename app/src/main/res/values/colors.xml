@@ -8,4 +8,13 @@
     <color name="dark_grey">#424242</color>
     <color name="medium_grey">#9E9E9E</color>
     <color name="button_grey">#757575</color>
+
+
+    <!--第二种夜间模式-->
+    <color name="colorPrimary">#009688</color>
+    <color name="colorPrimaryDark">#00796B</color>
+    <color name="colorAccent">#009688</color>
+
+    <color name="textColorPrimary">#616161</color>
+    <color name="viewBackground">@android:color/white</color>
 </resources>

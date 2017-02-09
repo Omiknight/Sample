@@ -1,5 +1,7 @@
 package com.cins.example;
 
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatDelegate;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -24,10 +27,14 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private int mDayNightMode = AppCompatDelegate.MODE_NIGHT_AUTO;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+
         // Adding Toolbar to Main screen
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -37,10 +44,6 @@ public class MainActivity extends AppCompatActivity
         // Set Tabs inside Toolbar
         TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
-
-
-
-
 
         // Adding Floating Action Button to bottom right of main view
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -127,6 +130,32 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id==R.id.action_day_night_yes){
+
+            //Set the local night mode to some value
+            SharedPreferences sp = getSharedPreferences("user_setting", MODE_PRIVATE);
+            int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
+                sp.edit().putInt("theme", 0).apply();
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            } else {
+                sp.edit().putInt("theme", 1).apply();
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            }
+            //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            //getDelegate().setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            //调用 recreate(); 使设置生效
+            getWindow().setWindowAnimations(R.style.WindowAnimationFadeInOut);
+            recreate();
+            return true;
+        } else if (id == R.id.action_day_night_no) {
+            //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            //getDelegate().setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            //getWindow().setWindowAnimations(R.style.WindowAnimationFadeInOut);
+            //recreate();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -156,4 +185,34 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //夜间模式
+/*
+        int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        switch (currentNightMode) {
+            case Configuration.UI_MODE_NIGHT_NO:
+                mDayNightMode = AppCompatDelegate.MODE_NIGHT_NO;
+            case Configuration.UI_MODE_NIGHT_YES:
+                mDayNightMode = AppCompatDelegate.MODE_NIGHT_YES;
+            case Configuration.UI_MODE_NIGHT_UNDEFINED:
+                mDayNightMode = AppCompatDelegate.MODE_NIGHT_AUTO;
+        }*/
+        /*int uiMode = getResources().getConfiguration().uiMode;
+        int dayNightUiMode = uiMode & Configuration.UI_MODE_NIGHT_MASK;
+
+        if (dayNightUiMode == Configuration.UI_MODE_NIGHT_NO) {
+            mDayNightMode = AppCompatDelegate.MODE_NIGHT_NO;
+            mStatusTextView.setText(R.string.text_for_day_night_mode_night_no);
+        } else if (dayNightUiMode == Configuration.UI_MODE_NIGHT_YES) {
+            mDayNightMode = AppCompatDelegate.MODE_NIGHT_YES;
+            //mStatusTextView.setText(R.string.text_for_day_night_mode_night_yes);
+        } else {
+            mDayNightMode = AppCompatDelegate.MODE_NIGHT_AUTO;
+            //mStatusTextView.setText(R.string.text_for_day_night_mode_night_auto);
+        }*/
+    }
+
 }

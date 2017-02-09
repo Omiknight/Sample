@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 public class DetailActivity extends AppCompatActivity{
     public static final String EXTRA_POSITION = "position";
-
+    private DayNightHelper mDayNightHelper;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

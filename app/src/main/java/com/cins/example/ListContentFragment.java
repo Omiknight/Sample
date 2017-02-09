@@ -21,6 +21,9 @@ import android.widget.TextView;
 
 public class ListContentFragment extends Fragment {
 
+    public static ListContentFragment newInstance() {
+        return new ListContentFragment();
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         RecyclerView recyclerView = (RecyclerView) inflater.inflate(R.layout.recycler_view, container, false);

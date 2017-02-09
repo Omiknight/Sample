@@ -29,10 +29,11 @@
         android:layout_below="@+id/list_title"
         android:layout_marginLeft="@dimen/md_keylines"
         android:layout_toRightOf="@+id/list_avatar"
-        android:textColor="@color/medium_grey"
+
         android:ellipsize="end"
         android:singleLine="true"
         tools:text="@string/item_desc"
         android:textAppearance="?attr/textAppearanceListItem"
         android:textSize="@dimen/list_body" />
+    <!--android:textColor="@color/medium_grey"-->
 </RelativeLayout>
