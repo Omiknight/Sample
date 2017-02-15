@@ -1,7 +1,7 @@
 package com.cins.example.activity;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,8 +10,11 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,6 +24,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CompoundButton;
 
 import com.cins.example.AppConstants;
 import com.cins.example.fragment.CardContentFragment;
@@ -38,7 +42,11 @@ public class MainActivity extends AppCompatActivity
     public Activity mActivity;
     private int currentIndex;
     private int mDayNightMode = AppCompatDelegate.MODE_NIGHT_AUTO;
-
+    private boolean mIsAddedView;
+    NavigationView navigationView;
+    private boolean mIsChangeTheme;
+    private DrawerLayout drawer;
+    private Fragment currentFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,16 +74,68 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        drawer.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                if (mIsChangeTheme) {
+                    mIsChangeTheme = false;
+                    getWindow().setWindowAnimations(R.style.WindowAnimationFadeInOut);
+                    recreate();
+                }
+            }
+        });
+
+
+
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        MenuItem menuNightMode = navigationView.getMenu().findItem(R.id.nav_night_mode);
+        SwitchCompat dayNightSwitch = (SwitchCompat) MenuItemCompat
+                .getActionView(menuNightMode);
+        initNightModeSwitch();
     }
 
+    private void initNightModeSwitch() {
+        MenuItem menuNightMode = navigationView.getMenu().findItem(R.id.nav_night_mode);
+        SwitchCompat dayNightSwitch = (SwitchCompat) MenuItemCompat
+                .getActionView(menuNightMode);
+        setCheckedState(dayNightSwitch);
+        setCheckedEvent(dayNightSwitch);
+    }
+
+    private void setCheckedState(SwitchCompat dayNightSwitch) {
+        boolean isNight = SharedPreferencesUtil.getBoolean(this, AppConstants.ISNIGHT, false);
+        if (isNight) {
+            dayNightSwitch.setChecked(true);
+        } else {
+            dayNightSwitch.setChecked(false);
+        }
+    }
+
+    private void setCheckedEvent(SwitchCompat dayNightSwitch) {
+        dayNightSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    SharedPreferencesUtil.setBoolean(mActivity, AppConstants.ISNIGHT, true);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                } else {
+                    SharedPreferencesUtil.setBoolean(mActivity, AppConstants.ISNIGHT, false);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
+                mIsChangeTheme = true;
+                drawer.closeDrawer(GravityCompat.START);
+            }
+        });
+    }
     // Add Fragments to Tabs
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
@@ -136,22 +196,19 @@ public class MainActivity extends AppCompatActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
+        int id = item.getItemId();
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         } else if (id==R.id.action_day_night_yes){
 
             //Set the local night mode to some value
-            SharedPreferences sp = getSharedPreferences("user_setting", MODE_PRIVATE);
             int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
             if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
-                //sp.edit().putInt("theme", 0).apply();
                 SharedPreferencesUtil.setBoolean(mActivity, AppConstants.ISNIGHT, false);
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             } else {
-                //sp.edit().putInt("theme", 1).apply();
                 SharedPreferencesUtil.setBoolean(mActivity, AppConstants.ISNIGHT, true);
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             }
@@ -163,6 +220,7 @@ public class MainActivity extends AppCompatActivity
             recreate();
             return true;
         } else if (id == R.id.action_day_night_no) {
+
             //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             //getDelegate().setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -173,7 +231,6 @@ public class MainActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -183,14 +240,21 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
-
+            Intent intent = new Intent(this,AboutActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_slideshow) {
-
+            Intent intent = new Intent(this,TestActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
+
+        } else if(id == R.id.nav_component){
+            Intent intent = new Intent(this,ComponentActivity.class);
+            startActivity(intent);
+        }else if (id == R.id.nav_night_mode) {
 
         }
 
@@ -230,7 +294,16 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putInt(AppConstants.CURRENT_INDEX,currentIndex);
+        //outState.putInt(AppConstants.CURRENT_INDEX,currentIndex);
         super.onSaveInstanceState(outState);
+    }
+
+    public static void start(Activity activity) {
+        activity.startActivity(new Intent(activity, MainActivity.class));
+    }
+    public void switchContent(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.componentLayout, fragment).commit();
+        invalidateOptionsMenu();
     }
 }

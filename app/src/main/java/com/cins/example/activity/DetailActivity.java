@@ -11,12 +11,13 @@ import android.widget.TextView;
 
 import com.cins.example.DayNightHelper;
 import com.cins.example.R;
+import com.cins.example.activity.base.BaseActivity;
 
 /**
  * Created by Eric on 2017/1/14.
  */
 
-public class DetailActivity extends AppCompatActivity{
+public class DetailActivity extends BaseActivity {
     public static final String EXTRA_POSITION = "position";
     private DayNightHelper mDayNightHelper;
     @Override
@@ -24,8 +25,10 @@ public class DetailActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_detail);
+
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         // Set Collapsing Toolbar layout to the screen
         CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         // Set title of Detail page
