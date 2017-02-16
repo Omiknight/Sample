@@ -21,10 +21,10 @@
             android:title="Tools"/>
         <item
             android:id="@+id/nav_component"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Component"/>
+            android:icon="@drawable/other"
+            android:title="其他组件"/>
     </group>
-
+<!--
     <item android:title="Communicate">
         <menu>
             <item
@@ -37,15 +37,21 @@
                 android:title="Send"/>
         </menu>
     </item>
+-->
 
     <item android:title="@string/tools">
         <menu>
             <item
                 android:id="@+id/nav_night_mode"
+                android:icon="@drawable/ic_menu_night"
                 android:title="@string/night_mode"
                 app:actionLayout="@layout/daynight_switch"
                 app:showAsAction="always"/>
         </menu>
     </item>
+    <item
+        android:id="@+id/nav_aboutme"
+        android:icon="@drawable/aboutme"
+        android:title="关于"/>
 
 </menu>
