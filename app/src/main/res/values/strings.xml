@@ -32,4 +32,8 @@
     <string name="action_open_in_browser">在浏览器中打开</string>
     <string name="action_copy_text">复制内容文本</string>
     <string name="action_share_as_text">作为文本分享</string>
+
+    <string name="splash_slogan">Go through the every bit of life</string>
+    <string name="splash_version">V 1.0.0</string>
+    <string name="splash_copyright">Copyright &#169; 2017 iDaily All Rights Reserved\nPowered by Eric Jin</string>
 </resources>

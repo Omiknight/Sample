@@ -30,4 +30,9 @@
     <dimen name="display2">45sp</dimen>
     <dimen name="display3">56sp</dimen>
     <dimen name="display4">112sp</dimen>
+
+    <dimen name="splash_bottom_padding">10dp</dimen>
+    <dimen name="splash_middle_top_margin">10dp</dimen>
+    <dimen name="splash_bottom_margin">40dp</dimen>
+    <dimen name="splash_top_margin">130dp</dimen>
 </resources>

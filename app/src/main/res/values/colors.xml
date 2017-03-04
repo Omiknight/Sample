@@ -17,4 +17,7 @@
 
     <color name="textColorPrimary">#616161</color>
     <color name="viewBackground">@android:color/white</color>
+
+    <color name="alpha_10_white">#1AFFFFFF</color>
+    <color name="alpha_90_white">#E6FFFFFF</color>
 </resources>

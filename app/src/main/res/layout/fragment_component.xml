@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/componentLayout"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <TextView
+        android:id="@+id/bottomNavigation"
+        style="@style/CommonText"
+        android:layout_height="45dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:text="Bottom navigation"/>
+
+
+    <View
+        style="@style/DividerHorizontal"/>
+    <TextView
+        android:id="@+id/snackbars"
+        style="@style/CommonText"
+        android:layout_height="45dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:text="Snackbars"/>
+
+
+    <View
+        style="@style/DividerHorizontal"/>
+
+    <TextView
+        android:id="@+id/bottomSheetDialog"
+        style="@style/CommonText"
+        android:layout_height="45dp"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:text="BottomSheetDialog"/>
+
+    <View
+        style="@style/DividerHorizontal"/>
+
+    <TextView
+        android:id="@+id/dialogs"
+        style="@style/CommonText"
+        android:layout_height="45dp"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:text="Dialogs"/>
+
+    <View
+        style="@style/DividerHorizontal"/>
+
+
+    <LinearLayout
+        android:id="@+id/switchCompatLayout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="?android:attr/selectableItemBackground">
+
+        <TextView
+            style="@style/CommonText"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:text="SwitchCompat"/>
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/switchCompat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <View
+        style="@style/DividerHorizontal"/>
+
+    <LinearLayout
+        android:id="@+id/checkboxLayout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="?android:attr/selectableItemBackground">
+
+        <TextView
+            style="@style/CommonText"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:text="Checkbox"/>
+
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <View
+        style="@style/DividerHorizontal"/>
+
+    <LinearLayout
+        android:id="@+id/radiobuttonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="?android:attr/selectableItemBackground">
+
+        <TextView
+            style="@style/CommonText"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:text="Radio button"/>
+
+        <RadioButton
+            android:id="@+id/radiobutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <View
+        style="@style/DividerHorizontal"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="?android:attr/colorBackground">
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"/>
+    </LinearLayout>
+</LinearLayout>
